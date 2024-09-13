@@ -1,0 +1,49 @@
+<div class="container align-items-center mt-5 mb-5">
+    <h1>{{nombre}} </h1>
+    <form class="form-inline">
+        <label for="inputState"></label>
+        <select name="selectLista" type="number" id="inputState" class="form-control" [(ngModel)]="selectedLevel" (ngModelChange)="selected()">
+            <option *ngFor="let item of selectLista" [ngValue]="item.id">
+                {{item.name}}
+            </option>
+        </select>
+        <button type="button" class="btn btn-outline-primary ml-2" [ngClass]="{'active':botonPopulares}" (click)="getPopulares()">Populares</button>
+        <button type="button" class="btn btn-outline-dark ml-2" [ngClass]="{'active':botonRecientes}" (click)="getMejorPuntuadas()">Mejores Puntuadas</button>
+    </form>
+
+    <hr class="my-4">
+    <div class="card-deck cont-over">
+        <div class="card" *ngFor="let mv of displayMovies; let i = index" [attr.data-index]="i">
+            <img class="card-img-top" [src]="'https://image.tmdb.org/t/p/w500' + mv.poster_path" [alt]="mv.image">
+            <div class="card-body ">
+                <h5 class="card-title ">{{ mv.title || mv.name }}</h5>
+                <p class="card-text text-justify">{{ mv.overview | slice:0:100}}...</p>
+                <p class="card-text "><small class="text-muted ">Fecha de Estreno {{mv.release_date}}</small></p>
+            </div>
+            <div class="card-footer">
+                <!--<button type="button" class="btn btn-outline-info btn-lg btn-block" data-toggle="modal" data-target="#PopularMovie" (click)="displayInfo(i)">Info</button>-->
+                <button type="button" class="btn btn-outline-info btn-lg btn-block" (click)="buscarDetalle(mv.id)">Info</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="PopularMovie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" *ngIf="dataMovie">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ dataMovie.title || dataMovie.name }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                {{ dataMovie.overview }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

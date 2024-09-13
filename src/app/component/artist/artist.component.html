@@ -1,0 +1,15 @@
+<div class="container align-items-center mt-5 mb-5">
+    <h1>Artistas</h1>
+    <hr class="my-4">
+    <div class="card-deck cont-over">
+        <div class="card" *ngFor="let artist of listaArtistas; let i = index" [attr.data-index]="i">
+            <img class="card-img-top" [src]="'https://image.tmdb.org/t/p/w500' + artist.profile_path" [alt]="artist.name">
+            <div class="card-body ">
+                <h5 class="card-title ">{{ artist.name }}</h5>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-outline-info btn-lg btn-block" (click)="displayInfo(artist.id)">Info</button>
+            </div>
+        </div>
+    </div>
+</div>

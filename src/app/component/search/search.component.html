@@ -1,0 +1,51 @@
+<div class="container align-items-center mt-5 mb-5">
+    <h1>Busqueda: {{ titleSearch }}</h1>
+    <div class="input-group">
+        <input #termino type="text" class="form-control" (keyup)="buscar(termino.value)" placeholder="Buscar...">
+        <div class="input-group-prepend">
+            <select name="selectLista" type="number" id="inputState" class="form-control" [(ngModel)]="selectedLevel">
+                <option *ngFor="let item of selectLista" [ngValue]="item.id">
+                    {{item.name}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <hr class="my-4">
+    <div class="card-deck cont-over" *ngIf="selectedLevel == 1 && listaMovies != null">
+        <div class="card" *ngFor="let mv of listaMovies; let i = index" [attr.data-index]="i">
+            <img class="card-img-top" [src]="'https://image.tmdb.org/t/p/w500' + mv.poster_path" [alt]="mv.image">
+            <div class="card-body ">
+                <h5 class="card-title ">{{ mv.title }}</h5>
+                <p class="card-text text-justify">{{ mv.overview | slice:0:100}}</p>
+                <p class="card-text "><small class="text-muted ">Last updated {{mv.release_date}} ago</small></p>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-outline-info btn-lg btn-block" (click)="getInfoMovie(mv.id)">Info</button>
+            </div>
+        </div>
+    </div>
+    <div class="card-deck cont-over" *ngIf="selectedLevel == 2 && listaSeries != null">
+        <div class="card" *ngFor="let mv of listaSeries; let i = index" [attr.data-index]="i">
+            <img class="card-img-top" [src]="'https://image.tmdb.org/t/p/w500' + mv.poster_path" [alt]="mv.image">
+            <div class="card-body ">
+                <h5 class="card-title ">{{ mv.title }}</h5>
+                <p class="card-text text-justify">{{ mv.overview | slice:0:100}}</p>
+                <p class="card-text "><small class="text-muted ">Last updated {{mv.release_date}} ago</small></p>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-outline-info btn-lg btn-block" (click)="getInfoSerie(mv.id)">Info</button>
+            </div>
+        </div>
+    </div>
+    <div class="card-deck cont-over" *ngIf="selectedLevel == 3 && listaArtistas != null">
+        <div class="card" *ngFor="let artist of listaArtistas; let i = index" [attr.data-index]="i">
+            <img class="card-img-top" [src]="'https://image.tmdb.org/t/p/w500' + artist.profile_path" [alt]="artist.name">
+            <div class="card-body ">
+                <h5 class="card-title ">{{ artist.name }}</h5>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-outline-info btn-lg btn-block" (click)="getInfoArtista(artist.id)">Info</button>
+            </div>
+        </div>
+    </div>
+</div>
